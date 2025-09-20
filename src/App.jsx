@@ -36,8 +36,36 @@ function App() {
   );
 }
 
-function TextExpander(children) {
-  return <div>children</div>;
+function TextExpander({
+  collapseButtonText = "showLess",
+  expandButtonText = "showFull",
+  buttonColor = "#00BAD4",
+  collapsedNumWords = 10,
+  children,
+  expanded = false,
+}) {
+  const [showFullText, changeShowFullText] = useState(expanded);
+  let shortVersion = children.slice(0, collapsedNumWords);
+  console.log(shortVersion);
+  function showLess() {
+    changeShowFullText((e) => !e);
+  }
+
+  return showFullText == true ? (
+    <div>
+      {children}
+      <button style={{ color: buttonColor }} onClick={showLess}>
+        {collapseButtonText}
+      </button>
+    </div>
+  ) : (
+    <div>
+      {shortVersion}
+      <button style={{ color: buttonColor }} onClick={showLess}>
+        {expandButtonText}
+      </button>
+    </div>
+  );
 }
 
 export default App;
